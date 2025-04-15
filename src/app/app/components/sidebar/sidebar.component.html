@@ -1,0 +1,10 @@
+<div [ngClass]="{'sidebar-open': isOpen, 'sidebar-closed': !isOpen}" class="sidebar bg-dark text-white">
+    <ul class="list-unstyled p-3">
+      <li (click)="navigate('/home')" class="mb-3 pointer"><i class="bi bi-house me-2"></i> Home</li>
+      <li (click)="navigate('/car-listings')" class="mb-3 pointer"><i class="bi bi-car-front me-2"></i> Cars</li>
+      <li (click)="navigate('/spare-parts')" class="mb-3 pointer"><i class="bi bi-wrench me-2"></i> Spare Parts</li>
+      <li (click)="navigate('/user-dashboard')" class="mb-3 pointer"><i class="bi bi-person me-2"></i> My Dashboard</li>
+      <li (click)="navigate('/admin-dashboard')" class="mb-3 pointer"><i class="bi bi-gear me-2"></i> Admin</li>
+    </ul>
+  </div>
+  

@@ -1,0 +1,70 @@
+<div class="container my-4">
+  <h2 class="mb-4">Car Listings</h2>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search cars..."
+        (input)="onSearchChange($event)"
+      />
+    </div>
+    <div class="col-md-6">
+      <select class="form-select" (change)="onSortChange($event)">
+        <option value="model">Sort by Model</option>
+        <option value="year">Sort by Year</option>
+        <option value="price">Sort by Price</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngFor="let car of filteredCars" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img [src]="car.image" class="card-img-top" alt="{{ car.model }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ car.model }}</h5>
+          <p class="card-text">
+            Year: {{ car.year }} <br> Price: {{ car.price | currency }}
+          </p>
+          <button class="btn btn-primary" (click)="openDetails(car)">
+            View Details
+          </button>
+          <button class="btn btn-success ms-2" (click)="addToCart(car)">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade show d-block"
+  *ngIf="selectedCar"
+  style="background: rgba(0, 0, 0, 0.5);"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ selectedCar?.model }} Details</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <img
+          [src]="selectedCar?.image"
+          class="img-fluid mb-3"
+          alt="{{ selectedCar?.model }}"
+        />
+        <p><strong>Year:</strong> {{ selectedCar?.year }}</p>
+        <p><strong>Price:</strong> {{ selectedCar?.price | currency }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

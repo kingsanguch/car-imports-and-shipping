@@ -32,8 +32,10 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ],
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+  "src/styles.scss"
+],
             "scripts": [],
             "server": "src/main.server.ts",
             "outputMode": "server",
@@ -90,18 +92,25 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+             
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ],
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+  "src/styles.scss"
+],
+
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "2d282fa7-cdec-4e6d-ae52-31e99dd0c389"
   }
 }

@@ -1,0 +1,63 @@
+<div class="container my-4">
+  <h2 class="mb-4">Spare Parts Catalog</h2>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search spare parts..."
+        (input)="onSearchChange($event)"
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div *ngFor="let part of filteredParts" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img [src]="part.image" class="card-img-top" alt="{{ part.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ part.name }}</h5>
+          <p class="card-text">
+            Price: {{ part.price | currency }}
+          </p>
+          <button class="btn btn-primary" (click)="openDetails(part)">
+            View Details
+          </button>
+          <button class="btn btn-success mt-2" (click)="addToCart(part)">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Spare Part Details -->
+<div
+  class="modal fade show d-block"
+  *ngIf="selectedPart"
+  style="background: rgba(0, 0, 0, 0.5);"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ selectedPart?.name }} Details</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <img
+          [src]="selectedPart?.image"
+          class="img-fluid mb-3"
+          alt="{{ selectedPart?.name }}"
+        />
+        <p><strong>Price:</strong> {{ selectedPart?.price | currency }}</p>
+        <!-- Add any additional details here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

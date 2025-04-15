@@ -1,0 +1,53 @@
+<div class="container my-4">
+  <h2>Admin Dashboard</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Manage Vehicles</h4>
+      <button class="btn btn-success mb-2" (click)="addVehicle()">Add Vehicle</button>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vehicle of vehicles">
+            <td>{{ vehicle.model }}</td>
+            <td>{{ vehicle.year }}</td>
+            <td>{{ vehicle.price | currency }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="editVehicle(vehicle)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteVehicle(vehicle)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <h4>Manage Spare Parts</h4>
+      <button class="btn btn-success mb-2" (click)="addSparePart()">Add Spare Part</button>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let part of spareParts">
+            <td>{{ part.name }}</td>
+            <td>{{ part.price | currency }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="editSparePart(part)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteSparePart(part)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

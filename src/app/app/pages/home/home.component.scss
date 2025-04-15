@@ -1,0 +1,13 @@
+.hero-banner {
+    position: relative;
+    height: 60vh;
+    overflow: hidden;
+  }
+  .hero-banner img {
+    object-fit: cover;
+    height: 100%;
+  }
+  .hero-content {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }
+  

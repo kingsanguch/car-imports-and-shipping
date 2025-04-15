@@ -1,0 +1,27 @@
+<div class="container my-4">
+  <h2>Add Vehicle</h2>
+  <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="model" class="form-label">Model</label>
+      <input type="text" id="model" formControlName="model" class="form-control" placeholder="Enter model">
+    </div>
+    <div class="mb-3">
+      <label for="year" class="form-label">Year</label>
+      <input type="number" id="year" formControlName="year" class="form-control" placeholder="Enter year">
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input type="number" id="price" formControlName="price" class="form-control" placeholder="Enter price">
+    </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Select Image</label>
+      <!-- File input to allow image selection -->
+      <input type="file" id="image" (change)="onFileChange($event)" class="form-control">
+    </div>
+    <!-- Optionally, display a preview if an image is selected -->
+    <div class="mb-3" *ngIf="vehicleForm.get('image')?.value">
+      <img [src]="vehicleForm.get('image')?.value" alt="Vehicle Preview" class="img-fluid" style="max-height: 200px;">
+    </div>
+    <button type="submit" class="btn btn-primary">Add Vehicle</button>
+  </form>
+</div>
