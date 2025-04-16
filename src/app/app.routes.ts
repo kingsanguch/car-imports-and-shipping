@@ -23,17 +23,20 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'car-listings', component: CarListingsComponent },
-  { path: 'cart', component: CartComponent},
+  { path: 'cart', component: CartComponent },
   { path: 'spare-parts', component: SparePartsComponent },
   { path: 'user-dashboard', component: UserDashboardComponent },
   { path: 'admin-dashboard', component: AdminDashboardComponent },
   { path: 'admin/add-vehicle', component: AddVehicleComponent },
-  { path: 'admin/edit-vehicle/:id', component: EditVehicleComponent },
+  {
+    path: 'admin/edit-vehicle/:id',
+    component: EditVehicleComponent,
+    data: { renderMode: 'no-prerender' }
+  },
   { path: 'admin/add-spare-part', component: AddSparePartComponent },
-  { path: 'admin/edit-spare-part/:id', component: EditSparePartComponent }
+  {
+    path: 'admin/edit-spare-part/:id',
+    component: EditSparePartComponent,
+    data: { renderMode: 'no-prerender' }
+  }
 ];
-
-// In main.ts, bootstrap the router with these routes:
-// bootstrapApplication(AppComponent, {
-//   providers: [provideRouter(routes, withComponentInputBinding())]
-// });
