@@ -1,7 +1,7 @@
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { Routes } from '@angular/router';
 
-// Import standalone components
+// Standalone Components
 import { LoginComponent } from './app/auth/login/login.component';
 import { RegisterComponent } from './app/auth/register/register.component';
 import { HomeComponent } from './app/pages/home/home.component';
@@ -11,7 +11,7 @@ import { SparePartsComponent } from './app/pages/spare-parts/spare-parts.compone
 import { UserDashboardComponent } from './app/pages/user-dashboard/user-dashboard.component';
 import { AdminDashboardComponent } from './app/pages/admin-dashboard/admin-dashboard.component';
 
-// Import Admin CRUD Components
+// Admin CRUD Components
 import { AddVehicleComponent } from './admin/add-vehicle/add-vehicle.component';
 import { EditVehicleComponent } from './admin/edit-vehicle/edit-vehicle.component';
 import { AddSparePartComponent } from './admin/add-spare-part/add-spare-part.component';
