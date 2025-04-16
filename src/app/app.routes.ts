@@ -30,13 +30,11 @@ export const routes: Routes = [
   { path: 'admin/add-vehicle', component: AddVehicleComponent },
   {
     path: 'admin/edit-vehicle/:id',
-    component: EditVehicleComponent,
-    data: { renderMode: 'no-prerender' }
-  },
+    component: EditVehicleComponent, },
+  
   { path: 'admin/add-spare-part', component: AddSparePartComponent },
   {
     path: 'admin/edit-spare-part/:id',
     component: EditSparePartComponent,
-    data: { renderMode: 'no-prerender' }
-  }
+     }
 ];

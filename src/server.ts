@@ -1,65 +1,66 @@
-import { CommonEngine } from '@angular/ssr/node';
-import { render } from '@netlify/angular-runtime/common-engine.mjs';
+import {
+  AngularNodeAppEngine,
+  createNodeRequestHandler,
+  isMainModule,
+  writeResponseToNodeResponse,
+} from '@angular/ssr/node';
+import express from 'express';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+const browserDistFolder = resolve(serverDistFolder, '../browser');
+
+const app = express();
+const angularApp = new AngularNodeAppEngine();
 
 /**
- * Create a CommonEngine instance to handle SSR rendering.
+ * Example Express Rest API endpoints can be defined here.
+ * Uncomment and define endpoints as necessary.
+ *
+ * Example:
+ * ```ts
+ * app.get('/api/**', (req, res) => {
+ *   // Handle API request
+ * });
+ * ```
  */
-const engine = new CommonEngine();
 
 /**
- * This function handles requests for both Netlify Functions and local testing.
- * We define `getPrerenderParams` to provide the dynamic parameters during prerendering.
+ * Serve static files from /browser
  */
-async function getPrerenderParams(path: string) {
-  const params: { id: string }[] = [];
-  
-  // For dynamic routes, such as 'admin/edit-vehicle/:id', we generate an array of valid params.
-  if (path.startsWith('/admin/edit-vehicle/')) {
-    const vehicleIds = ['1', '2', '3']; // Replace with actual vehicle IDs you want to prerender
-    for (let id of vehicleIds) {
-      params.push({ id });
-    }
-  }
-  
-  if (path.startsWith('/admin/edit-spare-part/')) {
-    const sparePartIds = ['101', '102', '103']; // Replace with actual spare part IDs
-    for (let id of sparePartIds) {
-      params.push({ id });
-    }
-  }
+app.use(
+  express.static(browserDistFolder, {
+    maxAge: '1y',
+    index: false,
+    redirect: false,
+  }),
+);
 
-  return params;
+/**
+ * Handle all other requests by rendering the Angular application.
+ */
+app.use('/**', (req, res, next) => {
+  angularApp
+    .handle(req)
+    .then((response) =>
+      response ? writeResponseToNodeResponse(response, res) : next(),
+    )
+    .catch(next);
+});
+
+/**
+ * Start the server if this module is the main entry point.
+ * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
+ */
+if (isMainModule(import.meta.url)) {
+  const port = process.env['PORT'] || 4000;
+  app.listen(port, () => {
+    console.log(`Node Express server listening on http://localhost:${port}`);
+  });
 }
 
 /**
- * This function handles requests for both Netlify Functions and local testing.
+ * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
  */
-export async function netlifyCommonEngineHandler(request: Request): Promise<Response> {
-  const url = new URL(request.url);
-  
-  // Check for routes needing prerendering
-  if (url.pathname.startsWith('/admin/edit-vehicle/') || url.pathname.startsWith('/admin/edit-spare-part/')) {
-    // Get prerender params dynamically
-    const params = await getPrerenderParams(url.pathname);
-    
-    // Flatten the params into key-value pairs
-    const searchParams = new URLSearchParams();
-    params.forEach(param => {
-      searchParams.append('id', param.id);  // Append each id as a separate query parameter
-    });
-
-    // Create the prerendered URL with query string
-    const prerenderedUrl = `${url.pathname}?${searchParams.toString()}`;
-    
-    // Pass the prerendered URL as part of an object
-    return render({ engine, url: prerenderedUrl });
-  }
-  
-  // Render the Angular application via SSR, passing as an object
-  return render({ engine, url: request.url });
-}
-
-/**
- * Angular CLI & other environments use this as a universal request handler.
- */
-export const reqHandler = netlifyCommonEngineHandler;
+export const reqHandler = createNodeRequestHandler(app);
